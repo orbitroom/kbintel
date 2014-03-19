@@ -12,6 +12,9 @@ import pdb
 # Seconds to wait before each request
 TIMEOUT = 2
 
+# Instantiates a new browser object with specified timeout variable
+browser = Browser(TIMEOUT)
+
 def main():
     parser = argparse.ArgumentParser(description="Killboard Intel")
     parser.add_argument("-u", "--url", help="fetch intel from url")
@@ -67,21 +70,25 @@ def fetch(url):
     os.system('clear')
     print "Retrieving data - please wait..."
 
-    # Instantiates a new browser object with specified timeout variable
-    br = Browser(TIMEOUT)
+    # Opens the specified URL and reads the home page
+    home_page = soupify(fetch_url)
+    
+    # Parses the URL for the top pilot and 
+    pilot_url = home_page.find_all("table", class_='kb-table awardbox')[0].a['href']
+    pilot_page = soupify(pilot_url)
 
-    # Opens the specified URL
-    br.open(fetch_url)
+    # Parse
+    corp_name = pilot_page.find_all('tr', class_='kb-table-row-even')[0].find_all('a')[0].string
+    alliance_name = pilot_page.find_all('tr', class_='kb-table-row-even')[1].find_all('a')[0].string
 
+    print 'Analyzing {}[{}]'.format(corp_name, alliance_name)
+    
     # Finds the kill page from the main page and feeds it into BeautifulSoup for parsing
-    req = br.click_link(text='Kills')
-    br.open(req)
-    bs = BeautifulSoup(br.response().read())
-
-    corp_title = br.title()
-    print corp_title
-
-    page_count = int(bs.find_all("div", class_='klsplitter')[0].find_all('a')[1].string)
+    browser.click_link(text='Home')
+    kill_page = soupify(browser.click_link(text='Kills'))
+    
+    # Counts the number of pages to parse
+    page_count = int(kill_page.find_all("div", class_='klsplitter')[0].find_all('a')[1].string)
 
     estimate = (TIMEOUT*page_count)
 
@@ -89,18 +96,24 @@ def fetch(url):
     if estimate >= 60:
         if query_yes_no(page_count + ' page_count of history found. Report generation will take ~'
                         + str(estimate) + ' seconds. Continue?'):
-            collect(bs, page_count)
+            collect(kill_page, page_count)
         else:
             print "Exiting"
     else:
-        collect(bs, page_count)
+        collect(kill_page, page_count)
 
-    #pdb.set_trace()
+
+# BeautifulSoup helper function - returns BS page
+def soupify(url):
+    browser.open(url)
+    return BeautifulSoup(browser.response().read())
 
 
 def collect(first_page, page_count):
     print "Generating Report"
-
+    #pdb.set_trace()
+    for page in tqdm(range(page_count), desc='Pages mined:'):
+        time.sleep(2)
 
 if __name__ == '__main__':
     main()
