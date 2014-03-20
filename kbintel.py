@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -8,6 +9,7 @@ from bs4 import BeautifulSoup
 from tqdm import *
 from common import Browser
 import pdb
+import collections
 from collections import defaultdict
 
 # Seconds to wait before each request
@@ -133,7 +135,6 @@ def collect(first_page, pages):
     for page in tqdm(range(pages), desc='Pages Mined'):
         days = current_page.find_all('div', class_='kb-date-header')
         tables = current_page.find_all('table', class_='kb-table kb-kl-table kb-table-rows')
-        #pdb.set_trace()
         for day, table in zip(days, tables):
             if not day.string in ordered_keys:
                 ordered_keys.extend([day.string])
@@ -161,8 +162,15 @@ def analyze(data, ordered_keys):
             kill_locations.extend([kill[0]])
             kill_times.extend([kill[1]])
 
-        print str(day)+': '
-        print len(kills)
+        kill_counter = collections.Counter(kill_locations)
+        #pdb.set_trace()
+        print '--------------------------------'
+        print str(day)
+        print 'Kills: {}'.format(len(kills))
+        for item in kill_counter.items():
+            print str(item[0]) + ' - ' + str(item[1])
+        print '--------------------------------'
+        print '\n'
 
 if __name__ == '__main__':
     main()

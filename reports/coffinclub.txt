@@ -1,0 +1,156 @@
+[H[2JCrawler initializing - please wait...
+Generating Report for March, 2014
+Pages Mined: |----------| 0/6   0% [elapsed: 00:00 left: ?, ? iters/sec]Pages Mined: |#---------| 1/6  16% [elapsed: 00:02 left: 00:14,  0.35 iters/sec]Pages Mined: |###-------| 2/6  33% [elapsed: 00:05 left: 00:11,  0.35 iters/sec]Pages Mined: |#####-----| 3/6  50% [elapsed: 00:08 left: 00:08,  0.35 iters/sec]Pages Mined: |######----| 4/6  66% [elapsed: 00:11 left: 00:05,  0.35 iters/sec]Pages Mined: |########--| 5/6  83% [elapsed: 00:14 left: 00:02,  0.35 iters/sec]                                                                                --------------------------------
+Wednesday, March 19th
+Kills: 6
+Derelik, Onsooh (0.4) - 3
+Derelik, Sendaya (0.3) - 3
+--------------------------------
+
+
+--------------------------------
+Tuesday, March 18th
+Kills: 9
+Providence, Y-MPWL (0.0) - 1
+Providence, QR-K85 (0.0) - 4
+Providence, X6AB-Y (0.0) - 1
+Providence, H6-CX8 (0.0) - 3
+--------------------------------
+
+
+--------------------------------
+Monday, March 17th
+Kills: 31
+Derelik, Onsooh (0.4) - 2
+Providence, G-5EN2 (0.0) - 9
+Derelik, Gomati (0.4) - 1
+Metropolis, Klogori (0.3) - 1
+Derelik, Kazna (0.2) - 2
+Heimatar, Dal (0.4) - 1
+Heimatar, Gulmorogod (0.4) - 1
+Derelik, Sendaya (0.3) - 2
+Providence, 9-F0B2 (0.0) - 12
+--------------------------------
+
+
+--------------------------------
+Sunday, March 16th
+Kills: 11
+Providence, 2-TEGJ (0.0) - 7
+Providence, AY-24I (0.0) - 3
+Providence, K1I1-J (0.0) - 1
+--------------------------------
+
+
+--------------------------------
+Saturday, March 15th
+Kills: 1
+Derelik, Sendaya (0.3) - 1
+--------------------------------
+
+
+--------------------------------
+Friday, March 14th
+Kills: 1
+Derelik, Futzchag (0.2) - 1
+--------------------------------
+
+
+--------------------------------
+Thursday, March 13th
+Kills: 1
+Providence, LF-2KP (0.0) - 1
+--------------------------------
+
+
+--------------------------------
+Wednesday, March 12th
+Kills: 3
+Derelik, Onsooh (0.4) - 2
+Derelik, Sendaya (0.3) - 1
+--------------------------------
+
+
+--------------------------------
+Monday, March 10th
+Kills: 15
+Black Rise, Kinakka (0.4) - 1
+Derelik, Futzchag (0.2) - 6
+Black Rise, Hikkoken (0.3) - 2
+Black Rise, Innia (0.3) - 1
+Derelik, Sendaya (0.3) - 5
+--------------------------------
+
+
+--------------------------------
+Sunday, March 9th
+Kills: 2
+Derelik, Futzchag (0.2) - 2
+--------------------------------
+
+
+--------------------------------
+Friday, March 7th
+Kills: 11
+Metropolis, Frerstorn (0.3) - 1
+Derelik, Kuharah (0.2) - 1
+The Bleak Lands, Kourmonen (0.4) - 1
+The Bleak Lands, Huola (0.4) - 1
+Heimatar, Gulmorogod (0.4) - 1
+Heimatar, Amamake (0.4) - 2
+Derelik, Sendaya (0.3) - 3
+Metropolis, Isbrabata (0.4) - 1
+--------------------------------
+
+
+--------------------------------
+Thursday, March 6th
+Kills: 14
+Derelik, Kuharah (0.2) - 1
+Derelik, Futzchag (0.2) - 5
+Derelik, Kazna (0.2) - 1
+Derelik, Sendaya (0.3) - 7
+--------------------------------
+
+
+--------------------------------
+Wednesday, March 5th
+Kills: 8
+Heimatar, Lulm (0.3) - 2
+Derelik, Futzchag (0.2) - 1
+Heimatar, Gulmorogod (0.4) - 5
+--------------------------------
+
+
+--------------------------------
+Tuesday, March 4th
+Kills: 3
+Providence, LF-2KP (0.0) - 2
+Metropolis, Todifrauan (0.1) - 1
+--------------------------------
+
+
+--------------------------------
+Monday, March 3rd
+Kills: 4
+Providence, 2-TEGJ (0.0) - 3
+Heimatar, Gulmorogod (0.4) - 1
+--------------------------------
+
+
+--------------------------------
+Sunday, March 2nd
+Kills: 9
+Providence, 2-TEGJ (0.0) - 4
+Derelik, Futzchag (0.2) - 5
+--------------------------------
+
+
+--------------------------------
+Saturday, March 1st
+Kills: 2
+Providence, 2-TEGJ (0.0) - 1
+Derelik, Futzchag (0.2) - 1
+--------------------------------
+
+
