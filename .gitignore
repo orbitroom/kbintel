@@ -93,3 +93,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# Ignore reports
+reports/*

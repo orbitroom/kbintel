@@ -15,12 +15,15 @@ from collections import defaultdict
 # Seconds to wait before each request
 TIMEOUT = 2
 
+VERSION = "0.1"
+
 # Instantiates a new browser object with specified timeout variable
 browser = Browser(TIMEOUT)
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Killboard Intel")
-    parser.add_argument("-u", "--url", help="fetch intel from url")
+    parser = argparse.ArgumentParser(description="Killboard Intel - Version: %s" % VERSION)
+    parser.add_argument("-u", "--url", help="generate this month's report from url")
     args = parser.parse_args()
 
     if args.url:
@@ -39,8 +42,8 @@ def query_yes_no(question, default="yes"):
 
     The "answer" return value is one of "yes" or "no".
     """
-    valid = {"yes":True,   "y":True,  "ye":True,
-             "no":False,     "n":False}
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
     if default == None:
         prompt = " [y/n] "
     elif default == "yes":
@@ -58,14 +61,14 @@ def query_yes_no(question, default="yes"):
         elif choice in valid:
             return valid[choice]
         else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "\
+            sys.stdout.write("Please respond with 'yes' or 'no' " \
                              "(or 'y' or 'n').\n")
 
 
 def fetch(url):
     # Helper function to append 'http://' if left off
     if url.find('http://') == -1:
-        fetch_url = "http://"+url
+        fetch_url = "http://" + url
     else:
         fetch_url = url
 
@@ -74,7 +77,7 @@ def fetch(url):
 
     # Opens the specified URL and reads the home page
     #home_page = soupify(fetch_url)
-    
+
     # Parses the URL for the top pilot and 
     #pilot_url = home_page.find_all("table", class_='kb-table awardbox')[0].a['href']
     #pilot_page = soupify(pilot_url)
@@ -84,20 +87,19 @@ def fetch(url):
     #alliance_name = pilot_page.find_all('tr', class_='kb-table-row-even')[1].find_all('a')[0].string
 
     #print 'Analyzing {}[{}]'.format(corp_name, alliance_name)
-    
+
     # Finds the kill page from the main page and feeds it into BeautifulSoup for parsing
     browser.open(fetch_url)
     kill_page = soupify(browser.click_link(text='Kills'))
-    
-    # Counts the number of pages to parse
-    page_count = int(kill_page.find_all("div", class_='klsplitter')[0].find_all('a')[1].string)
 
-    estimate = (TIMEOUT*page_count)
+    # Counts the number of pages to parse
+    #pdb.set_trace()
+    # Grab the last page count container and find the number of pages
+    page_count = int(kill_page.find_all("div", class_='klsplitter')[-1].find_all('a')[1].string)
 
     # Prompt for continuation if collection will take longer than 60 seconds
-    if estimate >= 60:
-        if query_yes_no(page_count + ' page_count of history found. Report generation will take ~'
-                        + str(estimate) + ' seconds. Continue?'):
+    if page_count >= 100:
+        if query_yes_no(str(page_count) + ' pages of data found. Proceed?'):
             collect(kill_page, page_count)
         else:
             print "Exiting"
@@ -117,7 +119,6 @@ def clear():
 
 
 def collect(first_page, pages):
-
     # Start the crawler on the first page and modify the page variable over iterations
     current_page = first_page
 
@@ -140,7 +141,12 @@ def collect(first_page, pages):
                 ordered_keys.extend([day.string])
             rows = table.tbody.find_all('tr')
             for row in rows:
-                kill_location = row.find_all('div', class_='no_stretch kl-location')[0].text.split('\t ')[1]
+                kill_location = row.find_all('div', class_='no_stretch kl-location')[0].text
+                # Some version use different formatting
+                if kill_location.find('\t ') != -1:
+                    kill_location = kill_location.split('\t ')[1]
+                else:
+                    kill_location = kill_location.split('\n')[1]
                 kill_time = row.find_all('div', class_='kl-date')[0].text.split('\n')[1]
                 kill_data = [kill_location, kill_time]
                 data_dict[day.string].append(kill_data)
@@ -163,7 +169,6 @@ def analyze(data, ordered_keys):
             kill_times.extend([kill[1]])
 
         kill_counter = collections.Counter(kill_locations)
-        #pdb.set_trace()
         print '--------------------------------'
         print str(day)
         print 'Kills: {}'.format(len(kills))
@@ -171,6 +176,7 @@ def analyze(data, ordered_keys):
             print str(item[0]) + ' - ' + str(item[1])
         print '--------------------------------'
         print '\n'
+
 
 if __name__ == '__main__':
     main()
