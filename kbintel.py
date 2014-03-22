@@ -92,8 +92,6 @@ def fetch(url):
     browser.open(fetch_url)
     kill_page = soupify(browser.click_link(text='Kills'))
 
-    # Counts the number of pages to parse
-    #pdb.set_trace()
     # Grab the last page count container and find the number of pages
     page_count = int(kill_page.find_all("div", class_='klsplitter')[-1].find_all('a')[1].string)
 
@@ -124,7 +122,7 @@ def collect(first_page, pages):
 
     # Grabs the month
     kill_month = browser.title().split('- ')[1]
-    print "Generating Report for {}".format(kill_month)
+    print "Generating Report for %s" % kill_month
 
     # Initialize counter variables and data arrays
     next_page_counter = 1
