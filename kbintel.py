@@ -121,8 +121,13 @@ def collect(first_page, pages):
     current_page = first_page
 
     # Grabs the month
+    #pdb.set_trace()
     kill_month = browser.title().split('- ')[1]
-    print "Generating Report for %s" % kill_month
+
+    # Grabs the alliance/corp name
+    title = current_page.findAll(attrs={"name":"description"})[0]['content'].encode('utf-8').split('- ')[1]
+
+    print title + ' - ' + kill_month
 
     # Initialize counter variables and data arrays
     next_page_counter = 1
