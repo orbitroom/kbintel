@@ -3,14 +3,18 @@
 
 import sys
 import os
-import time
 import argparse
+import pdb
+from sys import platform
+from collections import defaultdict, Counter
+from operator import itemgetter
+
+
 from bs4 import BeautifulSoup
 from tqdm import *
+
 from common import Browser
-import pdb
-import collections
-from collections import defaultdict
+
 
 # Seconds to wait before each request
 TIMEOUT = 2
@@ -113,7 +117,13 @@ def soupify(url):
 
 def clear():
     # Clears the screen for prettiness
-    os.system('clear')
+    if platform == "linux" or platform == "linux2":
+        return os.system('clear')
+    elif platform == "darwin":
+        return os.system('clear')
+    elif platform == "win32":
+        return os.system('cls')
+
 
 
 def collect(first_page, pages):
@@ -127,7 +137,10 @@ def collect(first_page, pages):
     # Grabs the alliance/corp name
     title = current_page.findAll(attrs={"name":"description"})[0]['content'].encode('utf-8').split('- ')[1]
 
+    # Report header
+    clear()
     print title + ' - ' + kill_month
+    print '\n'
 
     # Initialize counter variables and data arrays
     next_page_counter = 1
@@ -171,11 +184,14 @@ def analyze(data, ordered_keys):
             kill_locations.extend([kill[0]])
             kill_times.extend([kill[1]])
 
-        kill_counter = collections.Counter(kill_locations)
+        kill_counter = Counter(kill_locations)
+        #pdb.set_trace()
+        sorted_kills = sorted(kill_counter.items(), key=lambda x: x[1], reverse=True)
+
         print '--------------------------------'
         print str(day)
         print 'Kills: {}'.format(len(kills))
-        for item in kill_counter.items():
+        for item in sorted_kills:
             print str(item[0]) + ' - ' + str(item[1])
         print '--------------------------------'
         print '\n'
