@@ -9,7 +9,6 @@ from sys import platform
 from collections import defaultdict, Counter
 
 
-from clint.textui import colored
 from bs4 import BeautifulSoup
 from tqdm import *
 
@@ -164,7 +163,9 @@ def collect(first_page, pages):
                 else:
                     kill_location = kill_location.split('\n')[1]
                 kill_time = row.find_all('div', class_='kl-date')[0].text.split('\n')[1]
-                kill_data = [kill_location, kill_time]
+                kill_ship = row.find_all('div', class_='no_stretch kl-shiptype-text')[0].text.split('\n')[1]
+                #pdb.set_trace()
+                kill_data = [kill_location, kill_time, kill_ship]
                 data_dict[day.string].append(kill_data)
         # Only increment page number if it's not on the last page
         if next_page_counter < pages:
@@ -181,30 +182,34 @@ def analyze(data, ordered_keys):
 
         kill_locations = []
         kill_times = []
+        kill_ships = []
 
         for kill in kills:
             kill_locations.extend([kill[0]])
             kill_times.extend([kill[1].split(':')[0]])
+            kill_ships.extend([kill[2]])
 
         kill_counter = Counter(kill_locations)
         time_counter = Counter(kill_times)
+        ship_counter = Counter(kill_ships)
 
         sorted_kills = sorted(kill_counter.items(), key=lambda x: x[1], reverse=True)
         sorted_times = sorted(time_counter.items(), key=lambda x: x)
+        sorted_ships = sorted(ship_counter.items(), key=lambda x: x[1], reverse=True)
 
         index_counter = 0
 
         print '--------------------------------'
         print str(day)
         print ''
-        print 'Total Kills: {}'.format(colored.red(len(kills)))
+        print 'Total Kills: {}'.format(len(kills))
         print ''
         print 'Location Breakdown: '
         print ''
         for item in sorted_kills:
             print '    ' + str(item[0]) + ' - ' + str(item[1])
         print ''
-        print 'Time Breakdown: '
+        print 'Timeline: '
         print ''
         for item in sorted_times:
             print '    {}:00 - '.format(item[0]) + str(item[1])
@@ -216,9 +221,13 @@ def analyze(data, ordered_keys):
             except IndexError:
                 pass
             if (current_hour + 1) < next_hour:
-                print ''
+                print '    |'
             index_counter += 1
-            #pdb.set_trace()
+        print ''
+        print 'Ships Destroyed: '
+        print ''
+        for item in sorted_ships:
+            print '    ' + str(item[0]) + ' - ' + str(item[1])
         print '--------------------------------'
         print '\n'
 
