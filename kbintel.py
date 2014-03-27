@@ -7,9 +7,9 @@ import argparse
 import pdb
 from sys import platform
 from collections import defaultdict, Counter
-from operator import itemgetter
 
 
+from clint.textui import colored
 from bs4 import BeautifulSoup
 from tqdm import *
 
@@ -19,7 +19,7 @@ from common import Browser
 # Seconds to wait before each request
 TIMEOUT = 2
 
-VERSION = "0.1"
+VERSION = "0.2"
 
 # Instantiates a new browser object with specified timeout variable
 browser = Browser(TIMEOUT)
@@ -178,21 +178,47 @@ def analyze(data, ordered_keys):
     for day in ordered_keys:
 
         kills = data[day]
+
         kill_locations = []
         kill_times = []
+
         for kill in kills:
             kill_locations.extend([kill[0]])
-            kill_times.extend([kill[1]])
+            kill_times.extend([kill[1].split(':')[0]])
 
         kill_counter = Counter(kill_locations)
-        #pdb.set_trace()
+        time_counter = Counter(kill_times)
+
         sorted_kills = sorted(kill_counter.items(), key=lambda x: x[1], reverse=True)
+        sorted_times = sorted(time_counter.items(), key=lambda x: x)
+
+        index_counter = 0
 
         print '--------------------------------'
         print str(day)
-        print 'Kills: {}'.format(len(kills))
+        print ''
+        print 'Total Kills: {}'.format(colored.red(len(kills)))
+        print ''
+        print 'Location Breakdown: '
+        print ''
         for item in sorted_kills:
-            print str(item[0]) + ' - ' + str(item[1])
+            print '    ' + str(item[0]) + ' - ' + str(item[1])
+        print ''
+        print 'Time Breakdown: '
+        print ''
+        for item in sorted_times:
+            print '    {}:00 - '.format(item[0]) + str(item[1])
+            # Add space between times if gap exists
+            current_hour = int(item[0])
+            next_index = (index_counter+1)
+            try:
+                next_hour = int(sorted_times[next_index][0])
+            except IndexError:
+                pass
+            if (current_hour + 1) < next_hour:
+                print ''
+            index_counter += 1
+            #pdb.set_trace()
         print '--------------------------------'
         print '\n'
 
