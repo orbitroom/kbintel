@@ -23,8 +23,9 @@
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
+*.db
+*.database
 
 # OS generated files #
 ######################
@@ -94,5 +95,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# Ignore reports
-reports/*
+# Ignore self help file
+help.txt
+*.json
