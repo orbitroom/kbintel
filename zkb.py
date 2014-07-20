@@ -311,7 +311,7 @@ class Query(object):
             raise QueryException(-1)
         query_modifiers = self.queryArgs
         for key, value in self.queryElements.iteritems():
-            if value == True:
+            if value is True:
                 query_modifiers = "%s/%s" % (key, query_modifiers)  # fetch modifiers must be first
             else:
                 query_modifiers = "%s%s/%s/" % (query_modifiers, key, value)

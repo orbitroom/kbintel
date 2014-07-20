@@ -62,7 +62,7 @@ def db_init():
             if verbose:
                 print "DB connection:\tGOOD"
         except Exception, e:
-            print "Database Error:" + e
+            print e
             sys.exit(2)
     else:
         # TODO: Implement optional db connection - simple mode
@@ -103,15 +103,16 @@ def query_yes_no(question, default="yes"):
                              "(or 'y' or 'n').\n")
 
 
-def fetch(url):
-    # Helper function to append 'http://' if left off
-    if url.find('http://') == -1:
-        fetch_url = "http://" + url
+def validate(url):
+    # Check for zKillboard patterns if non-standard URL
+    if '.' not in url:
+        print "validate short url"
+    # Make sure URL points to zKillboard only
+    elif 'zkillboard.com' in url:
+        print "zKillboard URL"
     else:
-        fetch_url = url
-
-    clear()
-    print "Crawler initializing - please wait..."
+        print "INVALID URL"
+        sys.exit()
 
 
 def clear():
@@ -123,6 +124,5 @@ if __name__ == '__main__':
     arguments = docopt(__doc__, version=VERSION)
     set_globals()
     db_init()
-    # Validate URL
+    validate(arguments['URL'])
     #pdb.set_trace()
-    #zkb.fetch(arguments['URL'])
