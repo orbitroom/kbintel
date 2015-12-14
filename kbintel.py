@@ -48,11 +48,11 @@ def query_yes_no(question, default="yes"):
     valid = {"yes": True, "y": True, "ye": True,
              "no": False, "n": False}
     if default == None:
-        prompt = " [y/n] "
+        prompt = " [yes/no] "
     elif default == "yes":
-        prompt = " [Y/n] "
+        prompt = " [yes/no] "
     elif default == "no":
-        prompt = " [y/N] "
+        prompt = " [yes/No] "
     else:
         raise ValueError("invalid default answer: '%s'\n" % default)
 
